@@ -33,8 +33,7 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new RuntimeException("Company not found!");
 		}
 		Company company = companyOptional.get();
-		CompanyDTO companyDTO = companyMapper.entityToDto(company);
-		return companyDTO;
+		return companyMapper.entityToDto(company);
 	}
 
 	@Override
@@ -45,7 +44,7 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new RuntimeException("Company not found!");
 		}
 		companyRepository.deleteById(idToDelete);
-		log.info("deleted Company");
+		log.info("deleted CompanyId" + idToDelete);
 	}
 
 	@Override
@@ -53,12 +52,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 		// companyRepository.findAll().stream().map(company->{
 		// return companyMapper.entityToDto(company);
-		// });
+		// });t =
 
-		List<CompanyDTO> collect = companyRepository.findAll().stream().map(companyMapper::entityToDto)
-				.collect(Collectors.toList());
-
-		return collect;
+		return companyRepository.findAll().stream().map(companyMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -70,8 +66,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 		log.info("created CompanyId" + company.getId());
 
-		CompanyDTO companyDTO1 = companyMapper.entityToDto(company);
-		return companyDTO1;
+		return companyMapper.entityToDto(company);
 	}
 
 	@Override
@@ -86,8 +81,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 		log.info("updated CompanyId" + company.getId());
 
-		CompanyDTO companyDTO1 = companyMapper.entityToDto(company);
-		return companyDTO1;
+		return companyMapper.entityToDto(company);
 
 	}
 
