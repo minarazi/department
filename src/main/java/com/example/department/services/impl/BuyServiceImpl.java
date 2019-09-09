@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.department.domain.Buy;
 import com.example.department.dto.BuyDTO;
+import com.example.department.dto.ProductDTO;
 import com.example.department.repositories.BuyRepository;
 import com.example.department.services.BuyService;
 import com.example.department.services.mapper.BuyMapper;
@@ -51,12 +52,24 @@ public class BuyServiceImpl implements BuyService {
 		return buyOptional.get();
 	}
 
+	public Buy totalPriceCalculator(Buy buy) {
+
+		Integer price = buy.getProduct().getPrice();
+		int amount = buy.getAmount();
+
+		Integer totalPrice = price * amount;
+
+		buy.setTotalPrice(totalPrice);
+
+		return buy;
+
+	}
+
 	@Override
 	public BuyDTO createBuy(BuyDTO buyDTO) {
 		Buy buy = buyMapper.dtoToEntity(buyDTO);
 
-		// TODO Calculate TotalPrice
-
+		buy = totalPriceCalculator(buy);
 		buy = buyRepository.save(buy);
 
 		log.info("created CompanyId" + buy.getId());
