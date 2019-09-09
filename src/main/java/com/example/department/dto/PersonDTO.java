@@ -12,4 +12,5 @@ public class PersonDTO {
 	private String name;
 	private String family;
 	private Integer age;
+	private Long departmentId;
 }

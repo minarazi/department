@@ -78,4 +78,14 @@ class DepartmentServiceImpl implements DepartmentService {
 		return departmentMapper.entityToDto(department);
 	}
 
+	@Override
+	public Department findById(Long id) {
+		Optional<Department> departmentOptional = departmentRepository.findById(id);
+
+		if (!departmentOptional.isPresent()) {
+			throw new RuntimeException("Department not found!");
+		}
+		return departmentOptional.get();
+	}
+
 }

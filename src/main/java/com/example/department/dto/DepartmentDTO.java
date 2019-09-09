@@ -10,4 +10,6 @@ import lombok.Setter;
 public class DepartmentDTO {
 	private Long id;
 	private String name;
+	private Long companyId;
+
 }

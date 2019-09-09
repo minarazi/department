@@ -85,4 +85,14 @@ public class CompanyServiceImpl implements CompanyService {
 
 	}
 
+	@Override
+	public Company findById(Long id) {
+		Optional<Company> companyOptional = companyRepository.findById(id);
+
+		if (!companyOptional.isPresent()) {
+			throw new RuntimeException("Company not found!");
+		}
+		return companyOptional.get();
+	}
+
 }
