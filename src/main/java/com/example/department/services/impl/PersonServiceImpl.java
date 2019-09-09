@@ -81,4 +81,14 @@ public class PersonServiceImpl implements PersonService {
 		return personMapper.entityToDto(person);
 	}
 
+	@Override
+	public Person findById(Long id) {
+		Optional<Person> personOptional = personRepository.findById(id);
+
+		if (!personOptional.isPresent()) {
+			throw new RuntimeException("Person not found!");
+		}
+		return personOptional.get();
+	}
+
 }
