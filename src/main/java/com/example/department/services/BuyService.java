@@ -13,7 +13,9 @@ public interface BuyService {
 
 	public Buy findById(Long id);
 
-	public List<BuyDTO> findBuyByPersonId(Long personId);
+	public List<BuyDTO> findByPersonId(Long personId);
+
+	public List<BuyDTO> findByDepartmentId(Long departmentId);
 
 	public BuyDTO createBuy(BuyDTO buyDTO);
 }

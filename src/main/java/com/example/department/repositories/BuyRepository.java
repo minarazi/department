@@ -11,4 +11,6 @@ import com.example.department.domain.Buy;
 public interface BuyRepository extends JpaRepository<Buy, Long> {
 
 	List<Buy> findByPerson_Id(Long personId);
+
+	List<Buy> findByPerson_Department_Id(Long departmentId);
 }

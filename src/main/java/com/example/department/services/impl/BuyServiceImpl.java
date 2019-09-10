@@ -80,11 +80,16 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public List<BuyDTO> findBuyByPersonId(Long personId) {
-
-		List<Buy> findByPerson_Id = buyRepository.findByPerson_Id(personId);
+	public List<BuyDTO> findByPersonId(Long personId) {
 
 		return buyRepository.findByPerson_Id(personId).stream().map(buyMapper::entityToDto)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<BuyDTO> findByDepartmentId(Long departmentId) {
+
+		return buyRepository.findByPerson_Department_Id(departmentId).stream().map(buyMapper::entityToDto)
 				.collect(Collectors.toList());
 	}
 

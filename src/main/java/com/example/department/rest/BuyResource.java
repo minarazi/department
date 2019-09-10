@@ -39,7 +39,12 @@ public class BuyResource {
 	}
 
 	@GetMapping(value = "/person/{personId}")
-	public ResponseEntity<List<BuyDTO>> findBuyByPersonId(@PathVariable("personId") Long personId) {
-		return ResponseEntity.ok(buyService.findBuyByPersonId(personId));
+	public ResponseEntity<List<BuyDTO>> findByPersonId(@PathVariable("personId") Long personId) {
+		return ResponseEntity.ok(buyService.findByPersonId(personId));
+	}
+
+	@GetMapping(value = "/department/{departmentId}")
+	public ResponseEntity<List<BuyDTO>> findByDepartmentId(@PathVariable("departmentId") Long departmentId) {
+		return ResponseEntity.ok(buyService.findByDepartmentId(departmentId));
 	}
 }
