@@ -91,4 +91,12 @@ public class ProductServiceImpl implements ProductService {
 		return productOptional.get();
 	}
 
+	@Override
+	public Product updateProduct(Product product) {
+
+		log.info("updated ProductId" + product.getId());
+
+		return productRepository.save(product);
+	}
+
 }

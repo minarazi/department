@@ -12,6 +12,7 @@ import com.example.department.domain.Buy;
 import com.example.department.dto.BuyDTO;
 import com.example.department.repositories.BuyRepository;
 import com.example.department.services.BuyService;
+import com.example.department.services.ProductService;
 import com.example.department.services.mapper.BuyMapper;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class BuyServiceImpl implements BuyService {
 
 	private final BuyRepository buyRepository;
 	private final BuyMapper buyMapper;
+	private final ProductService ProductService;
 
 	@Override
 	public BuyDTO findBuyById(Long id) {
@@ -77,6 +79,14 @@ public class BuyServiceImpl implements BuyService {
 
 	}
 
+	public void updateProductAmount(Buy buy) {
+		int buyamount = buy.getAmount();
+		Integer productAmount = buy.getProduct().getAmount();
+		productAmount = productAmount - buyamount;
+		buy.getProduct().setAmount(productAmount);
+		ProductService.updateProduct(buy.getProduct());
+	}
+
 	@Transactional
 	@Override
 	public BuyDTO createBuy(BuyDTO buyDTO) {
@@ -85,7 +95,7 @@ public class BuyServiceImpl implements BuyService {
 		checkProductAmount(buy);
 		buy = totalPriceCalculator(buy);
 		buy = buyRepository.save(buy);
-
+		updateProductAmount(buy);
 		log.info("created CompanyId" + buy.getId());
 
 		return buyMapper.entityToDto(buy);
