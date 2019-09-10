@@ -53,6 +53,17 @@ public class BuyServiceImpl implements BuyService {
 		return buyOptional.get();
 	}
 
+	public void checkProductAmount(Buy buy) {
+
+		int buyAmount = buy.getAmount();
+		Integer productAmount = buy.getProduct().getAmount();
+		if (buyAmount > productAmount) {
+
+			throw new RuntimeException("Product amount is Not enough!");
+
+		}
+	}
+
 	public Buy totalPriceCalculator(Buy buy) {
 
 		Integer price = buy.getProduct().getPrice();
@@ -71,6 +82,7 @@ public class BuyServiceImpl implements BuyService {
 	public BuyDTO createBuy(BuyDTO buyDTO) {
 		Buy buy = buyMapper.dtoToEntity(buyDTO);
 
+		checkProductAmount(buy);
 		buy = totalPriceCalculator(buy);
 		buy = buyRepository.save(buy);
 
