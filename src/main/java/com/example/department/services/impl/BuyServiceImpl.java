@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.department.domain.Buy;
 import com.example.department.dto.BuyDTO;
-import com.example.department.dto.ProductDTO;
 import com.example.department.repositories.BuyRepository;
 import com.example.department.services.BuyService;
 import com.example.department.services.mapper.BuyMapper;
@@ -65,6 +66,7 @@ public class BuyServiceImpl implements BuyService {
 
 	}
 
+	@Transactional
 	@Override
 	public BuyDTO createBuy(BuyDTO buyDTO) {
 		Buy buy = buyMapper.dtoToEntity(buyDTO);
@@ -78,9 +80,12 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public BuyDTO findBuyByPersonId(Long personId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BuyDTO> findBuyByPersonId(Long personId) {
+
+		List<Buy> findByPerson_Id = buyRepository.findByPerson_Id(personId);
+
+		return buyRepository.findByPerson_Id(personId).stream().map(buyMapper::entityToDto)
+				.collect(Collectors.toList());
 	}
 
 }

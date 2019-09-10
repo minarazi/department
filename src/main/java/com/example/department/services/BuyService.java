@@ -13,7 +13,7 @@ public interface BuyService {
 
 	public Buy findById(Long id);
 
-	public BuyDTO findBuyByPersonId(Long personId);
+	public List<BuyDTO> findBuyByPersonId(Long personId);
 
 	public BuyDTO createBuy(BuyDTO buyDTO);
 }

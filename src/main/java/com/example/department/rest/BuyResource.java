@@ -37,4 +37,9 @@ public class BuyResource {
 	public ResponseEntity<BuyDTO> createBuy(@RequestBody BuyDTO buyDTO) {
 		return new ResponseEntity<>(buyService.createBuy(buyDTO), HttpStatus.CREATED);
 	}
+
+	@GetMapping(value = "/person/{personId}")
+	public ResponseEntity<List<BuyDTO>> findBuyByPersonId(@PathVariable("personId") Long personId) {
+		return ResponseEntity.ok(buyService.findBuyByPersonId(personId));
+	}
 }
