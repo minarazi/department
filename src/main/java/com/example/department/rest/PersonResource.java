@@ -42,11 +42,11 @@ public class PersonResource {
 
 	@PostMapping
 	public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonDTO personDTO) {
-		return new ResponseEntity<>(personService.createPerson(personDTO), HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDTO));
 	}
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<PersonDTO> updatePerson(@PathVariable("id") Long id, @RequestBody PersonDTO personDTO) {
-		return ResponseEntity.ok(personService.updatePerson(personDTO));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(personService.updatePerson(personDTO));
 	}
 }

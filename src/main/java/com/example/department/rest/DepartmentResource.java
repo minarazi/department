@@ -42,12 +42,12 @@ public class DepartmentResource {
 
 	@PostMapping
 	public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO departmentDTO) {
-		return new ResponseEntity<>(departmentService.createDepartment(departmentDTO), HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.createDepartment(departmentDTO));
 	}
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable("id") Long id,
 			@RequestBody DepartmentDTO departmentDTO) {
-		return ResponseEntity.ok(departmentService.updateDepartment(departmentDTO));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(departmentService.updateDepartment(departmentDTO));
 	}
 }

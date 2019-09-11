@@ -35,7 +35,7 @@ public class BuyResource {
 
 	@PostMapping
 	public ResponseEntity<BuyDTO> createBuy(@RequestBody BuyDTO buyDTO) {
-		return new ResponseEntity<>(buyService.createBuy(buyDTO), HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(buyService.createBuy(buyDTO));
 	}
 
 	@GetMapping(value = "/person/{personId}")

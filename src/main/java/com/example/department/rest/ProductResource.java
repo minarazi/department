@@ -42,11 +42,11 @@ public class ProductResource {
 
 	@PostMapping
 	public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-		return new ResponseEntity<>(productService.createProduct(productDTO), HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productDTO));
 	}
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) {
-		return ResponseEntity.ok(productService.updateProduct(productDTO));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.updateProduct(productDTO));
 	}
 }

@@ -43,11 +43,11 @@ public class CompanyResource {
 
 	@PostMapping
 	public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyDTO companyDTO) {
-		return new ResponseEntity<>(companyService.createCompany(companyDTO), HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(companyService.createCompany(companyDTO));
 	}
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<CompanyDTO> updateCompany(@PathVariable("id") Long id, @RequestBody CompanyDTO companyDTO) {
-		return ResponseEntity.ok(companyService.updateCompany(companyDTO));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(companyService.updateCompany(companyDTO));
 	}
 }
