@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.department.domain.Department;
 import com.example.department.dto.DepartmentDTO;
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 class DepartmentServiceImpl implements DepartmentService {
 
+	private static final String DEPARTMENT_NOT_FOUND = "Department not found!";
 	private final DepartmentRepository departmentRepository;
 	private final DepartmentMapper departmentMapper;
 
@@ -28,11 +31,11 @@ class DepartmentServiceImpl implements DepartmentService {
 		Optional<Department> departmentOptional = departmentRepository.findById(id);
 
 		if (!departmentOptional.isPresent()) {
-			throw new RuntimeException("Department not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, DEPARTMENT_NOT_FOUND);
 		}
 		Department department = departmentOptional.get();
-		DepartmentDTO departmentDTO = departmentMapper.entityToDto(department);
-		return departmentDTO;
+
+		return departmentMapper.entityToDto(department);
 	}
 
 	@Override
@@ -40,7 +43,7 @@ class DepartmentServiceImpl implements DepartmentService {
 		Optional<Department> departmentOptional = departmentRepository.findById(idToDelete);
 
 		if (!departmentOptional.isPresent()) {
-			throw new RuntimeException("Department not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, DEPARTMENT_NOT_FOUND);
 		}
 		departmentRepository.deleteById(idToDelete);
 		log.info("deleted DepartmentId" + idToDelete);
@@ -69,7 +72,7 @@ class DepartmentServiceImpl implements DepartmentService {
 		Optional<Department> departmentOptional = departmentRepository.findById(departmentDTO.getId());
 
 		if (!departmentOptional.isPresent()) {
-			throw new RuntimeException("department not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, DEPARTMENT_NOT_FOUND);
 		}
 		department = departmentRepository.save(department);
 
@@ -83,7 +86,7 @@ class DepartmentServiceImpl implements DepartmentService {
 		Optional<Department> departmentOptional = departmentRepository.findById(id);
 
 		if (!departmentOptional.isPresent()) {
-			throw new RuntimeException("Department not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, DEPARTMENT_NOT_FOUND);
 		}
 		return departmentOptional.get();
 	}

@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.department.domain.Buy;
 import com.example.department.dto.BuyDTO;
@@ -23,21 +25,24 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class BuyServiceImpl implements BuyService {
 
+	private static final String PRODUCT_AMOUNT_IS_NOT_ENOUGH = "Product amount is Not enough!";
+	private static final String BUY_NOT_FOUND = "Buy not found!";
+
 	private final BuyRepository buyRepository;
 	private final BuyMapper buyMapper;
-	private final ProductService ProductService;
+	private final ProductService productService;
 
 	@Override
 	public BuyDTO findBuyById(Long id) {
 
 		Optional<Buy> buyOptional = buyRepository.findById(id);
 		if (!buyOptional.isPresent()) {
-			throw new RuntimeException("Buy not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, BUY_NOT_FOUND);
 		}
 
 		Buy buy = buyOptional.get();
-		BuyDTO buyDto = buyMapper.entityToDto(buy);
-		return buyDto;
+
+		return buyMapper.entityToDto(buy);
 	}
 
 	@Override
@@ -50,7 +55,7 @@ public class BuyServiceImpl implements BuyService {
 	public Buy findById(Long id) {
 		Optional<Buy> buyOptional = buyRepository.findById(id);
 		if (!buyOptional.isPresent()) {
-			throw new RuntimeException("Buy not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, BUY_NOT_FOUND);
 		}
 		return buyOptional.get();
 	}
@@ -61,8 +66,7 @@ public class BuyServiceImpl implements BuyService {
 		Integer productAmount = buy.getProduct().getAmount();
 		if (buyAmount > productAmount) {
 
-			throw new RuntimeException("Product amount is Not enough!");
-
+			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, PRODUCT_AMOUNT_IS_NOT_ENOUGH);
 		}
 	}
 
@@ -84,7 +88,7 @@ public class BuyServiceImpl implements BuyService {
 		Integer productAmount = buy.getProduct().getAmount();
 		productAmount = productAmount - buyamount;
 		buy.getProduct().setAmount(productAmount);
-		ProductService.updateProduct(buy.getProduct());
+		productService.updateProduct(buy.getProduct());
 	}
 
 	@Transactional

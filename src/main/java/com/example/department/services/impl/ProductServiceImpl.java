@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.department.domain.Product;
 import com.example.department.dto.ProductDTO;
@@ -20,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+	private static final String PRODUCT_NOT_FOUND = "Product not found!";
+
 	private final ProductRepository productRepository;
 	private final ProductMapper productMapper;
 
@@ -28,11 +32,11 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Product> productOptional = productRepository.findById(id);
 
 		if (!productOptional.isPresent()) {
-			throw new RuntimeException("Product not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, PRODUCT_NOT_FOUND);
 		}
 		Product product = productOptional.get();
-		ProductDTO productDTO = productMapper.entityToDto(product);
-		return productDTO;
+
+		return productMapper.entityToDto(product);
 	}
 
 	@Override
@@ -40,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Product> productOptional = productRepository.findById(idToDelete);
 
 		if (!productOptional.isPresent()) {
-			throw new RuntimeException("Product not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, PRODUCT_NOT_FOUND);
 		}
 		productRepository.deleteById(idToDelete);
 		log.info("deleted ProductId" + idToDelete);
@@ -70,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 
 		Optional<Product> productOptional = productRepository.findById(productDTO.getId());
 		if (!productOptional.isPresent()) {
-			throw new RuntimeException("Product Not Found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, PRODUCT_NOT_FOUND);
 		}
 
 		product = productRepository.save(product);
@@ -86,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Product> productOptional = productRepository.findById(id);
 
 		if (!productOptional.isPresent()) {
-			throw new RuntimeException("Product not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, PRODUCT_NOT_FOUND);
 		}
 		return productOptional.get();
 	}

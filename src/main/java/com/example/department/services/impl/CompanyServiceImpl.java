@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.department.domain.Company;
 import com.example.department.dto.CompanyDTO;
@@ -22,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
+	private static final String COMPANY_NOT_FOUND = "Company not found!";
+	
 	private final CompanyRepository companyRepository;
 	private final CompanyMapper companyMapper;
 
@@ -30,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Optional<Company> companyOptional = companyRepository.findById(id);
 
 		if (!companyOptional.isPresent()) {
-			throw new RuntimeException("Company not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, COMPANY_NOT_FOUND);
 		}
 		Company company = companyOptional.get();
 		return companyMapper.entityToDto(company);
@@ -41,7 +45,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Optional<Company> companyOptional = companyRepository.findById(idToDelete);
 
 		if (!companyOptional.isPresent()) {
-			throw new RuntimeException("Company not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, COMPANY_NOT_FOUND);
 		}
 		companyRepository.deleteById(idToDelete);
 		log.info("deleted CompanyId" + idToDelete);
@@ -75,7 +79,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Optional<Company> companyOptional = companyRepository.findById(companyDTO.getId());
 
 		if (!companyOptional.isPresent()) {
-			throw new RuntimeException("Company not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, COMPANY_NOT_FOUND);
 		}
 		company = companyRepository.save(company);
 
@@ -90,7 +94,7 @@ public class CompanyServiceImpl implements CompanyService {
 		Optional<Company> companyOptional = companyRepository.findById(id);
 
 		if (!companyOptional.isPresent()) {
-			throw new RuntimeException("Company not found!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, COMPANY_NOT_FOUND);
 		}
 		return companyOptional.get();
 	}
