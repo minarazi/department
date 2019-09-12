@@ -32,7 +32,7 @@ public class PersonResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deletePersonById(@PathVariable("id") Long idToDelet) {
 		personService.deletePersonById(idToDelet);
-		return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 
 	@GetMapping(value = "/{id}")

@@ -32,7 +32,7 @@ public class ProductResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteProductById(@PathVariable("id") Long idToDelet) {
 		productService.deleteProductById(idToDelet);
-		return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 
 	@GetMapping(value = "/{id}")

@@ -32,7 +32,7 @@ public class DepartmentResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteDepartmentById(@PathVariable("id") Long id) {
 		departmentService.deleteDepartmentById(id);
-		return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 
 	@GetMapping(value = "/{id}")

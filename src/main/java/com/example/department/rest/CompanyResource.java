@@ -33,7 +33,7 @@ public class CompanyResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteCompanyById(@PathVariable("id") Long id) {
 		companyService.deleteCompanyById(id);
-		return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 
 	@GetMapping(value = "/{id}")

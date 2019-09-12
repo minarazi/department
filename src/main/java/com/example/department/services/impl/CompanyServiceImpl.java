@@ -52,7 +52,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 		// companyRepository.findAll().stream().map(company->{
 		// return companyMapper.entityToDto(company);
-		// });t =
+		// });
 
 		return companyRepository.findAll().stream().map(companyMapper::entityToDto).collect(Collectors.toList());
 	}
