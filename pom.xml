@@ -98,8 +98,8 @@
 					<generatedSourcesDirectory>${project.build.directory}/generated-sources</generatedSourcesDirectory>
 					<compilerArgs>
 						<compilerArg>
-							<arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
-                        	<arg>-Amapstruct.defaultComponentModel=spring</arg>
+							-Amapstruct.suppressGeneratorTimestamp=true
+                        	-Amapstruct.defaultComponentModel=spring
 						</compilerArg>
 					</compilerArgs>
 				</configuration>

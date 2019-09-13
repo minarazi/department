@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.department.dto.BuyDTO;
+import com.example.department.dto.DepartmentBuyDTO;
 import com.example.department.services.BuyService;
 
 import lombok.AllArgsConstructor;
@@ -46,5 +47,11 @@ public class BuyResource {
 	@GetMapping(value = "/department/{departmentId}")
 	public ResponseEntity<List<BuyDTO>> findByDepartmentId(@PathVariable("departmentId") Long departmentId) {
 		return ResponseEntity.ok(buyService.findByDepartmentId(departmentId));
+	}
+
+	@GetMapping(value = "/department/{departmentId}/report")
+	public ResponseEntity<DepartmentBuyDTO> getAllBuyAmountByDepartmentId(
+			@PathVariable("departmentId") Long departmentId) {
+		return ResponseEntity.ok(buyService.getAllBuyAmountAndPriceByDepartmentId(departmentId));
 	}
 }

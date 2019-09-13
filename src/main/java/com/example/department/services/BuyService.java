@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.department.domain.Buy;
 import com.example.department.dto.BuyDTO;
+import com.example.department.dto.DepartmentBuyDTO;
 
 public interface BuyService {
 
@@ -18,4 +19,6 @@ public interface BuyService {
 	public List<BuyDTO> findByDepartmentId(Long departmentId);
 
 	public BuyDTO createBuy(BuyDTO buyDTO);
+
+	public DepartmentBuyDTO getAllBuyAmountAndPriceByDepartmentId(Long departmentId);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.department.domain.Buy;
 import com.example.department.dto.BuyDTO;
+import com.example.department.dto.DepartmentBuyDTO;
 import com.example.department.repositories.BuyRepository;
 import com.example.department.services.BuyService;
 import com.example.department.services.ProductService;
@@ -117,6 +118,22 @@ public class BuyServiceImpl implements BuyService {
 
 		return buyRepository.findByPerson_Department_Id(departmentId).stream().map(buyMapper::entityToDto)
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public DepartmentBuyDTO getAllBuyAmountAndPriceByDepartmentId(Long departmentId) {
+
+		int totalBuyAmount = buyRepository.findByPerson_Department_Id(departmentId).stream().mapToInt(Buy::getAmount)
+				.sum();
+		int totalBuyPrice = buyRepository.findByPerson_Department_Id(departmentId).stream().mapToInt(Buy::getTotalPrice)
+				.sum();
+
+		DepartmentBuyDTO departmentBuyDTO = new DepartmentBuyDTO();
+		departmentBuyDTO.setDepartmentId(departmentId);
+		departmentBuyDTO.setTotalBuyAmount(totalBuyAmount);
+		departmentBuyDTO.setTotalBuyPrice(totalBuyPrice);
+
+		return departmentBuyDTO;
 	}
 
 }
