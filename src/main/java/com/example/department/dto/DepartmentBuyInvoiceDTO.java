@@ -7,12 +7,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BuyDTO {
-	
-	private Long id;
-	private int amount;
-	private int totalPrice;
-	private Long productId;
-	private Long personId;
+public class DepartmentBuyInvoiceDTO {
+
+	private Long departmentId;
+	private Integer totalBuyAmount;
+	private Integer totalBuyPrice;
 
 }

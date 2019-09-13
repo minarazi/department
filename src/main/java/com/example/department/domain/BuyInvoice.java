@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Buy {
+public class BuyInvoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
