@@ -101,7 +101,7 @@ public class BuyInvoiceServiceImpl implements BuyInvoiceService {
 		buyInvoice = totalPriceCalculator(buyInvoice);
 		buyInvoice = buyInvoiceRepository.save(buyInvoice);
 		updateProductAmount(buyInvoice);
-		log.info("created CompanyId" + buyInvoice.getId());
+		log.info("created BuyInvoiceId" + buyInvoice.getId());
 
 		return buyInvoiceMapper.entityToDto(buyInvoice);
 	}
@@ -123,10 +123,9 @@ public class BuyInvoiceServiceImpl implements BuyInvoiceService {
 	@Override
 	public DepartmentBuyInvoiceDTO getAllBuyInvoiceAmountAndPriceByDepartmentId(Long departmentId) {
 
-		int totalBuyInvoiceAmount = buyInvoiceRepository.findByPerson_Department_Id(departmentId).stream()
-				.mapToInt(BuyInvoice::getAmount).sum();
-		int totalBuyInvoicePrice = buyInvoiceRepository.findByPerson_Department_Id(departmentId).stream()
-				.mapToInt(BuyInvoice::getTotalPrice).sum();
+		List<BuyInvoice> findByPerson_Department_Id = buyInvoiceRepository.findByPerson_Department_Id(departmentId);
+		int totalBuyInvoiceAmount = findByPerson_Department_Id.stream().mapToInt(BuyInvoice::getAmount).sum();
+		int totalBuyInvoicePrice = findByPerson_Department_Id.stream().mapToInt(BuyInvoice::getTotalPrice).sum();
 
 		DepartmentBuyInvoiceDTO departmentBuyInvoiceDTO = new DepartmentBuyInvoiceDTO();
 		departmentBuyInvoiceDTO.setDepartmentId(departmentId);
